@@ -14,7 +14,7 @@ provider "hcloud" {
   # export HCLOUD_TOKEN="your-api-token"
 }
 
-module "{{MODULE_NAME}}" {
+module "this" {
   source = "../../"
 
   name = "basic-example"
