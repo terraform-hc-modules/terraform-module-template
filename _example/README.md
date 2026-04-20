@@ -1,20 +1,22 @@
-# Example: {{MODULE_NAME}}
+# Examples
 
-This example demonstrates basic usage of the {{MODULE_NAME}} module.
+This directory contains examples for the {{MODULE_NAME}} module.
+
+## Examples
+
+| Example | Description |
+|---------|-------------|
+| [basic](./_example/basic) | Minimal configuration |
+| [complete](./_example/complete) | Full configuration with all options |
 
 ## Usage
 
 ```bash
-# Set your Hetzner Cloud API token
+cd _example/basic  # or _example/complete
+
 export HCLOUD_TOKEN="your-api-token"
 
-# Initialize and apply
 terraform init
 terraform plan
 terraform apply
 ```
-
-## Requirements
-
-- Terraform >= 1.5.0
-- Hetzner Cloud API token

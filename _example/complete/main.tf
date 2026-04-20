@@ -15,12 +15,14 @@ provider "hcloud" {
 }
 
 module "{{MODULE_NAME}}" {
-  source = "../"
+  source = "../../"
 
-  name = "example"
+  name = "complete-example"
 
   labels = {
-    environment = "dev"
+    environment = "production"
+    team        = "platform"
     managed_by  = "terraform"
+    project     = "infrastructure"
   }
 }
