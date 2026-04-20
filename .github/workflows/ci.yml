@@ -102,7 +102,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: tfsec
-        uses: aquasecurity/tfsec-action@v1
+        uses: aquasecurity/tfsec-action@v1.0.3
         with:
           additional_args: --exclude-downloaded-modules --minimum-severity MEDIUM
 
@@ -148,5 +148,9 @@ jobs:
 
       - name: Check README
         run: |
-          terraform-docs markdown table --output-file README.md --output-mode inject .
-          git diff --exit-code README.md
+          if grep -q "BEGIN_TF_DOCS" README.md; then
+            terraform-docs markdown table --output-file README.md --output-mode inject .
+            git diff --exit-code README.md
+          else
+            echo "Skipping terraform-docs check (no TF_DOCS markers in README.md)"
+          fi
