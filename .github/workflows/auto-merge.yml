@@ -18,6 +18,6 @@ jobs:
       # AWS/tfsec defaults. pr-validation is excluded on purpose: it skips
       # dependabot, so waiting on it would never resolve.
       azure_cloud: true
-      tfchecks_azure: '["Terraform Test", "Lint", "Documentation"]'
+      tfchecks_azure: '["OpenTofu", "Lint", "Documentation"]'
     secrets:
       GITHUB: ${{ secrets.GITHUB || github.token }}
