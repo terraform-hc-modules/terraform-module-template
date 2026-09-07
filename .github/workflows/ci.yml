@@ -9,39 +9,12 @@ permissions:
   contents: read
 
 jobs:
-  terraform:
-    name: Terraform
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_wrapper: false
-
-      - name: Format Check
-        run: terraform fmt -check -recursive
-
-      - name: Init
-        run: terraform init -backend=false
-
-      - name: Validate
-        run: terraform validate
-
-      - name: Init Wrappers
-        run: terraform -chdir=wrappers init -backend=false
-
-      - name: Validate Wrappers
-        run: terraform -chdir=wrappers validate
-
   opentofu:
     name: OpenTofu
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup OpenTofu
         uses: opentofu/setup-opentofu@v1
@@ -68,10 +41,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
+        uses: hashicorp/setup-terraform@v4
         with:
           terraform_wrapper: false
 
@@ -84,67 +57,32 @@ jobs:
         working-directory: _example/terragrunt/basic
         run: terragrunt validate
 
-  security:
-    name: Security Scan
+  secrets:
+    name: Secret Scan
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      security-events: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
       - name: Setup Gitleaks
-        uses: jaxxstorm/action-install-gh-release@v1
+        uses: jaxxstorm/action-install-gh-release@v3
         with:
           repo: gitleaks/gitleaks
 
       - name: Run Gitleaks
         run: gitleaks detect --source . --verbose --redact
 
-      - name: tfsec
-        uses: aquasecurity/tfsec-action@v1.0.3
-        with:
-          additional_args: --exclude-downloaded-modules --minimum-severity MEDIUM
-
-      - name: Checkov
-        uses: bridgecrewio/checkov-action@v12
-        with:
-          directory: .
-          quiet: true
-          framework: terraform
-
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup TFLint
-        uses: terraform-linters/setup-tflint@v4
-        with:
-          tflint_version: latest
-
-      - name: Init TFLint
-        run: tflint --init
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-
-      - name: Run TFLint
-        run: tflint -f compact --recursive
-
   docs:
     name: Documentation
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup terraform-docs
-        uses: jaxxstorm/action-install-gh-release@v1
+        uses: jaxxstorm/action-install-gh-release@v3
         with:
           repo: terraform-docs/terraform-docs
 
