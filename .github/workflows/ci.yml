@@ -67,7 +67,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup Gitleaks
-        uses: jaxxstorm/action-install-gh-release@v3.0.0
+        uses: jaxxstorm/action-install-gh-release@v4.0.0
         with:
           repo: gitleaks/gitleaks
 
@@ -102,7 +102,7 @@ jobs:
         uses: actions/checkout@v7
 
       - name: Setup terraform-docs
-        uses: jaxxstorm/action-install-gh-release@v3.0.0
+        uses: jaxxstorm/action-install-gh-release@v4.0.0
         with:
           repo: terraform-docs/terraform-docs
 
